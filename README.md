@@ -61,3 +61,10 @@ Run the following command in the root directory:
 
 ```bash
 npm install
+
+PORT=3000
+OPENAI_API_KEY=sk-YOUR_OPENAI_KEY
+TELNYX_API_KEY=KEY017_YOUR_TELNYX_KEY
+TELNYX_PHONE_NUMBER=+15551234567
+PUBLIC_URL=[https://your-ngrok-url.ngrok-free.app](https://your-ngrok-url.ngrok-free.app)
+
