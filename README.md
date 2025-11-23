@@ -1,5 +1,17 @@
+<div align="center">
+
 # 🚀 DevHunter AI Dashboard
-## Automated Technical Recruitment Platform
+### Automated Technical Recruitment Platform
+
+<br />
+<img src="assets/logo.png" alt="DevHunter Logo" width="150" height="150">
+<br />
+
+**Automated Screening • Deep Code Analysis • Voice AI Interviews**
+
+[Report Bug](https://github.com/yourusername/repo/issues) · [Request Feature](https://github.com/yourusername/repo/issues)
+
+</div>
 
 ---
 
@@ -13,7 +25,7 @@
 
 DevHunter transforms the hiring pipeline by automating the initial technical screen. Instead of generic questions, it reads the candidate's actual code to generate highly specific, relevant interview topics.
 
-
+![Dashboard Screenshot Placeholder](path/to/dashboard_screenshot.png)
 
 ---
 
@@ -42,29 +54,114 @@ DevHunter transforms the hiring pipeline by automating the initial technical scr
 
 Before running the project, ensure you have the following installed and configured:
 
-1.  **Node.js** (v18+ recommended)
-2.  **OpenAI API Key** (for code analysis and interview logic)
-3.  **Telnyx Account** (API Key + Phone Number + Call Control App)
-4.  **Ngrok** (to expose your local server for voice webhooks)
+1. **Node.js** (v18+ recommended)
+2. **OpenAI API Key** (for code analysis and interview logic)
+3. **Telnyx Account** (API Key + Phone Number + Call Control App)
+4. **Ngrok** (to expose your local server for voice webhooks)
 
 ---
 
 ## 🛠️ Installation & Setup
 
-### 1. Clone Project
+Follow these steps to get a local development environment running.
 
-Ensure you have the file structure set up as defined in the Directory Structure section.
-
-### 2. Install Dependencies
-
-Run the following command in the root directory:
-
+### 1. Clone the Repository
 ```bash
-npm install
+git clone [https://github.com/your-username/devhunter-dashboard.git](https://github.com/your-username/devhunter-dashboard.git)
+cd devhunter-dashboard
+```
+2. Install Dependencies
+Install the necessary packages for both the backend and frontend.
+```Bash
 
+npm install
+```
+3. Configure Environment Variables
+Create a .env file in the root directory. You can copy the example below:
+
+```Bash
+
+# Create the file
+touch .env
+Paste the following configuration into your .env file:
+
+Code snippet
+
+# Server Configuration
 PORT=3000
-OPENAI_API_KEY=sk-YOUR_OPENAI_KEY
-TELNYX_API_KEY=KEY017_YOUR_TELNYX_KEY
+
+# API Keys
+OPENAI_API_KEY=sk-YOUR_OPENAI_KEY_HERE
+TELNYX_API_KEY=KEY017_YOUR_TELNYX_KEY_HERE
+
+# Voice Configuration
 TELNYX_PHONE_NUMBER=+15551234567
-PUBLIC_URL=[https://your-ngrok-url.ngrok-free.app](https://your-ngrok-url.ngrok-free.app)
+# NOTE: This URL will be updated in Step 4
+PUBLIC_URL=[https://placeholder.ngrok-free.app](https://placeholder.ngrok-free.app)
+
+```
+4. Start Ngrok Tunnel
+Telnyx needs to reach your local server to handle call events. Start Ngrok on your backend port:
+```
+ngrok http 3000
+```
+⚠️ Important: Copy the HTTPS URL provided by Ngrok (e.g., https://xyz.ngrok-free.app) and paste it into the PUBLIC_URL variable in your .env file.
+
+5. Run the Application
+This command uses concurrently to start both the backend API (port 3000) and the frontend React app (port 5173).
+
+```Bash
+
+npm start
+```
+6. Access the Dashboard
+Open your web browser and navigate to: http://localhost:5173
+
+📖 Usage Guide
+Add a Candidate: Click the + icon in the sidebar. Enter a name, role, and a public GitHub repository URL.
+
+Analyze Code: Select the candidate and click Analyze GitHub. The AI will deep-scan the repository.
+
+Start Interview: Once analysis is complete, the status changes to "Scheduled." Click Start Interview, enter a phone number, and the AI will initiate the call.
+
+Monitor Live: Watch the Live Transcript panel update in real-time as the candidate answers technical questions.
+
+📂 Directory Structure
+Plaintext
+
+```
+devhunter-dashboard/
+├── .env                    # Environment variables (API Keys)
+├── package.json            # Project dependencies & scripts
+├── server.js               # Node.js Backend (Voice & GitHub Logic)
+├── vite.config.js          # Vite Configuration
+├── tailwind.config.js      # Tailwind Configuration
+├── postcss.config.js       # PostCSS Configuration
+├── index.html              # React Entry Point
+├── public/                 # Static assets
+└── src/
+    ├── App.jsx             # Main Application Component
+    ├── main.jsx            # React DOM Render
+    ├── index.css           # Global Tailwind Styles
+    ├── components/         # Reusable UI components
+    └── lib/                # Utility functions (e.g., API helpers)
+
+```
+##⚡ Troubleshooting
+Vite: react-babel error
+
+Ensure you removed type imports from App.jsx.
+
+Example: Change import { type ClassValue } ... → import { clsx } ...
+
+
+Voice Call Not Connecting
+
+Check your PUBLIC_URL in .env. It must match your current running Ngrok session. Also, ensure your Telnyx Call Control App is pointing to ${PUBLIC_URL}/webhooks/telnyx.
+
+
+
+GitHub Analysis Fails
+
+Ensure the repository is public. If hitting rate limits, try using a different repo or wait a few minutes.
 
